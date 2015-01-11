@@ -4,7 +4,8 @@
 
 from Tkinter import *
 import tkMessageBox
-from kipro import *
+from aja.embedded.rest.kipro import Client
+
 import time
 import argparse
 import re
@@ -14,13 +15,13 @@ client_list=[]
 try:
     client1 = Client('http://192.168.1.2')
 except:
-    print "Can't Connect to Client"
+    print "Can't Connect to Client 1"
     quit()
 client2 = Client('http://192.168.1.2')
 try:
     client2 = Client('http://192.168.1.3')
 except:
-    print "Can't Connect to Client"
+    print "Can't Connect to Client 2"
     quit()
 client_list.append(client1)
 client_list.append(client2)
@@ -50,7 +51,7 @@ def prevClip():
         client.previousClip()
     time.sleep(1)
     clip_name.itemconfigure(t, text=client_list[0].getCurrentClipName())
-    time.sleep(.3)    
+    time.sleep(.3)
 def nextClip():
     for client in client_list:
         client.nextClip()
@@ -59,9 +60,9 @@ def nextClip():
     time.sleep(.3)
 def getTC():
     timecode = timecode_entry.get()
-    
+
     if TIMECODE_RE.match(timecode) == None:
-        
+
         timecode_entry.delete(0, END)
         timecode_entry.insert(INSERT,'00:00:00:00')
         return '00:00:00:00'
@@ -98,5 +99,3 @@ NextButt = Button(top, text ="Next Clip", width = '20', command = nextClip)
 NextButt.pack()
 
 top.mainloop()
-
-
